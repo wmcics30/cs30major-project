@@ -6,12 +6,14 @@ For my major project, I will be making a standard Sudoku game. The player will h
 - Have the user input numbers that will display on said grid
 - Be able to check if the user has made a mistake
 - Be able to check if the user has completed the game
-- Sound effects
-- Background music
 - A recursive algorithm that will be able to solve any Sudoku level and save the answer
+- Multiple difficulty levels
 
 ## Nice To Have
-- Multiple difficulty levels
-- Be able to randomly generate new levels every time and then solve them
 - Have both the option to type numbers in using the keyboard or be able to click on a number row on the bottom and place them using the mouse
 - Allow people to keep track of possible numbers before committing to it
+- Sound effects
+- Background music
+
+## Taking it to the Next Level
+- Be able to randomly generate new levels every time and then solve them
