@@ -1,4 +1,4 @@
-// 2D Grid Assignment
+//CS30 Final Project
 // Amy Lu
 // January 26, 2021
 //
@@ -418,7 +418,7 @@ class Num {
 
     //without "-10" after this.fontSize, it will bounce before it hits the bottom edge
     //I will try to work out the logistics of this issue for my final project
-    if (this.y < 0 || this.y + this.fontSize - 10 > windowHeight) { 
+    if (this.y < 0 || this.y + this.fontSize - 10> windowHeight) { 
       this.dy *= -1;
     }
   }

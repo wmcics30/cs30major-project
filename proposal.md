@@ -1,5 +1,5 @@
 # Proposal
-For my major project, I will be making a web-based Sudoku game.
+For my major project, I will be making a standard Sudoku game. The player will have to fill in the numbers 1-9 once in every row, column, and 3x3 square. The code itself will able to solve any empty Sudoku level first so that it can save the answer. 
 
 ## Needs To Have
 - An interactive grid
