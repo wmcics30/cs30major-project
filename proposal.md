@@ -1,5 +1,5 @@
 # Proposal
-For my major project, I will be making a web-based Sudoku game
+For my major project, I will be making a web-based Sudoku game.
 
 ## Needs To Have
 - An interactive grid
@@ -14,3 +14,4 @@ For my major project, I will be making a web-based Sudoku game
 - Multiple difficulty levels
 - Be able to randomly generate new levels every time and then solve them
 - Have both the option to type numbers in using the keyboard or be able to click on a number row on the bottom and place them using the mouse
+- Allow people to keep track of possible numbers before committing to it
