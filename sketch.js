@@ -35,7 +35,7 @@ function preload(){
   complete = loadSound("assets/complete.mp3");
   error = loadSound("assets/error.wav");
   buttonSound = loadSound("assets/button.flac");
-  backgroundMusic = loadSound("assets/music.ogg"); 
+  // backgroundMusic = loadSound("assets/music.ogg"); 
   original = loadJSON("assets/sudoku1-original.json");
   answer = loadJSON("assets/sudoku1-answer.json"); 
   playerGrid = loadJSON("assets/sudoku1-player.json");
@@ -43,7 +43,7 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  backgroundMusic.loop();
+  // backgroundMusic.loop();
 
   //center the grid
   gridSize = windowWidth*0.38;
