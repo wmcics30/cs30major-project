@@ -1,44 +1,9 @@
 //CS30 Final Project Recursion File
-//This file is just for me to experiment and mess around with recursion
+//Recursive backtracking file
 
-function factorial(n){
-
-  //base case 
-  if (n === 1){
-    return n === 1;
-  }
-
-  //recursive call
-  else {
-    return n * factorial(n-1);
-  }
-}
-
-function countDown(num){
-  if (num <= 0){
-    console.log("All done");
-    return;
-  }
-  console.log(num);
-  num--;
-  countDown(num);
-}
-
-function sumRange(num){
-  if (num === 1){
-    return 1;
-  }
-  return num + sumRange(num-1);
-}
-
-// sumRange(3)
-//     return 3 + sumRange(2)
-//         return 2 + sumRange(1)
-//             return 1
-
-console.log(factorial(4));
-countDown(4);
-console.log(sumRange(3));
+//Resources:
+// Geeks for Geeks (Website): N-Queen Problem
+// Back to Back SWE (Youtube): 3 Keys to Backtracking
 
 let original = [[0,0,0,2,6,0,7,0,1],
                 [6,8,0,0,7,0,0,9,0],
@@ -50,28 +15,86 @@ let original = [[0,0,0,2,6,0,7,0,1],
                 [0,4,0,0,5,0,0,3,6],
                 [7,0,3,0,1,8,0,0,0]];
 
-//go through original grid. 
-//If there is a zero, replace with some number
-//try out every number from 1-9 and check if the row, column, and square area already has that number
-//once it encounters a number that works, move on to the next empty square
-//if it gets to an empty square where no number works, go back to the previous square and try the next number that works 
-let rows = 9;
-let cols = 9;
+let row = 0;
+let col = 0;
 
-for (let y = 0; y<rows; y++){
-  for (let x = 0; x<cols; x++){
-    if (original[y][x] === 0){
-      original[y][x] = findNumber(y, x);
+function solveGrid(row, col){
+
+  //moving onto next row
+  if (col === 9 && row <= 8){
+    row++;
+    col = 0;
+  }
+
+  //completed entire board
+  else if (col === 9 && row === 8){
+    return original;
+  }
+
+  //check if cell is empty
+  if (original[row][col] === 0){
+    for (let num = 1; num<=9; num++){
+      original[row][col] = num;
+  
+      if (checkNum(row, col, num) === true){
+  
+        //recursive call
+        if (solveGrid(row, col + 1)){
+          return true;
+        }
+      }
     }
+    //backtracks
+    original[row][col] = 0;
+  }
+
+  else {
+    solveGrid(row, col+1);
   }
 }
 
-function findNumber(y, x){
-  for (let num = 1; num<=9; num++){
-    if (num not in rows && num not in cols && num not in square){
-      return num;
+function checkNum(row, col, num){
+  //check row
+  if (original[row].includes(num)){
+    return false;
+  }
+
+  //check column
+  for (let i = 0; i<9; i++){
+    if (num === original[i][col]){
+      return false;
     }
   }
-  return false; //no possible numbers, backtrack
-}
 
+  //check 3x3 square
+  //top left
+  if (row <= 2 && col <= 2){
+    for (let i = 0; i <= 2; i++){
+      for (let j = 0; j <= 2; j++){
+        if (num === original[i][j]){
+          return false;
+        }
+      }
+    }
+  }
+  //top middle
+  else if (row <= 2 && col <= 5){
+    for (let i = 0; i <= 2; i++){
+      for (let j = 3; j <= 5; j++){
+        if (num === original[i][j]){
+          return false;
+        }
+      }
+    }
+  }
+  //top right
+  if (row <= 2 && col <= 8){
+    for (let i = 0; i <= 2; i++){
+      for (let j = 6; j <= 8; j++){
+        if (num === original[i][j]){
+          return false;
+        }
+      }
+    }
+  }
+}

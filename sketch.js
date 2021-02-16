@@ -8,11 +8,6 @@
 // - The rules will not overlap with each other even if the screen is narrow
 //
 // Background music is made by syncopika
-//
-// Plans for Final Project:
-// - Solves sudoku (recursion)
-// - Button size and placement remains consistent with screen size (right now all the values are "magic numbers")
-// - More than one difficulty
 
 let rows, cols, cellWidth, cellHeight;
 let addNum = false;
