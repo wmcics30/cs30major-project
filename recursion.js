@@ -3,7 +3,7 @@
 
 //Resources:
 // Geeks for Geeks (Website): N-Queen Problem
-// Back to Back SWE (Youtube): 3 Keys to Backtracking
+// Back to Back SWE (Youtube): 3 Keys to Backtracking (did not look at actual Sudoku code)
 
 let grid = [[0,0,0,2,6,0,7,0,1],
             [6,8,0,0,7,0,0,9,0],
@@ -19,7 +19,7 @@ let row = 0;
 let col = 0;
 
 function solveGrid(row, col){
-  //moving onto next row
+  // moving onto next row
   if (col === 9 && row <= 8){
     row++;
     col = 0;
@@ -35,6 +35,7 @@ function solveGrid(row, col){
     for (let num = 1; num<=9; num++){  
       if (checkNum(row, col, num) === true){
         grid[row][col] = num;
+        console.log(grid);
 
         //recursive call
         if (solveGrid(row, col + 1)){
@@ -46,6 +47,7 @@ function solveGrid(row, col){
     grid[row][col] = 0;
   }
 
+  //if cell is already filled, move on to next cell
   else {
     solveGrid(row, col+1);
   }
@@ -95,6 +97,8 @@ function checkNum(row, col, num){
       }
     }
   }
+
+  //current num is a possibility 
   return true;
 }
 
