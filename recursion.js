@@ -32,11 +32,10 @@ function solveGrid(row, col){
 
   //check if cell is empty
   if (grid[row][col] === 0){
-    for (let num = 1; num<=9; num++){
-      grid[row][col] = num;
-  
+    for (let num = 1; num<=9; num++){  
       if (checkNum(row, col, num) === true){
-  
+        grid[row][col] = num;
+
         //recursive call
         if (solveGrid(row, col + 1)){
           return true;
@@ -98,3 +97,5 @@ function checkNum(row, col, num){
   }
   return true;
 }
+
+console.log(solveGrid(row,col));
