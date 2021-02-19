@@ -21,7 +21,6 @@ let col = 0;
 function solveGrid(row, col){
 
   //base case
-  //completed entire board
   // if (col === 9 && row === 8){
   //   return true;
   // }

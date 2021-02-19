@@ -7,6 +7,10 @@
 // - The lines of text in the rules wil start a new line if the next word does not fit
 // - The rules will not overlap with each other even if the screen is narrow
 //
+// NOTE: Sudoku 1-3: EASY
+//       Sudoku 4-6: MEDIUM
+//       Sudoku 7-9: HARD
+//
 // Background music is made by syncopika
 
 let rows, cols, cellWidth, cellHeight;
@@ -24,6 +28,20 @@ let gamePlay = false;
 let backgroundMusic;
 let numArray = [];
 let isComplete = false;
+let easy = false;
+let medium = false; 
+let hard = false;
+let options, choice;
+let sudoku1answer, sudoku1original, sudoku1player, 
+  sudoku2answer, sudoku2original, sudoku2player, 
+  sudoku3answer, sudoku3original, sudoku3player, 
+  sudoku4answer, sudoku4original, sudoku4player, 
+  sudoku5answer, sudoku5original, sudoku5player, 
+  sudoku6answer, sudoku6original, sudoku6player, 
+  sudoku7answer, sudoku7original, sudoku7player, 
+  sudoku8answer, sudoku8original, sudoku8player, 
+  sudoku9answer, sudoku9original, sudoku9player;
+
 
 function preload(){
   click = loadSound("assets/click1.wav");
@@ -34,6 +52,41 @@ function preload(){
   original = loadJSON("assets/sudoku1-original.json");
   answer = loadJSON("assets/sudoku1-answer.json"); 
   playerGrid = loadJSON("assets/sudoku1-player.json");
+  // sudoku1answer = preload("assets/sudoku1-answer.json");
+  // sudoku1original = preload("assets/sudoku1-original.json");
+  // sudoku1player = preload( "assets/sudoku1-player.json");
+
+  // sudoku2answer = preload("assets/sudoku2-answer.json");
+  // sudoku2original = preload("assets/sudoku2-original.json");
+  // sudoku2player = preload( "assets/sudoku2-player.json");
+
+  // sudoku3answer = preload("assets/sudoku3-answer.json");
+  // sudoku3original = preload("assets/sudoku3-original.json");
+  // sudoku3player = preload( "assets/sudoku3-player.json");
+
+  // sudoku4answer = preload("assets/sudoku4-answer.json");
+  // sudoku4original = preload("assets/sudoku4-original.json");
+  // sudoku4player = preload( "assets/sudoku4-player.json");
+
+  // sudoku5answer = preload("assets/sudoku5-answer.json");
+  // sudoku5original = preload("assets/sudoku5-original.json");
+  // sudoku5player = preload( "assets/sudoku5-player.json");
+
+  // sudoku6answer = preload("assets/sudoku6-answer.json");
+  // sudoku6original = preload("assets/sudoku6-original.json");
+  // sudoku6player = preload( "assets/sudoku6-player.json");
+
+  // sudoku7answer = preload("assets/sudoku7-answer.json");
+  // sudoku7original = preload("assets/sudoku7-original.json");
+  // sudoku7player = preload( "assets/sudoku7-player.json");
+
+  // sudoku8answer = preload("assets/sudoku8-answer.json");
+  // sudoku8original = preload("assets/sudoku8-original.json");
+  // sudoku8player = preload( "assets/sudoku8-player.json");
+
+  // sudoku9answer = preload("assets/sudoku9-answer.json");
+  // sudoku9original = preload("assets/sudoku9-original.json");
+  // sudoku9player = preload( "assets/sudoku9-player.json");
 }
 
 function setup() {
@@ -60,6 +113,7 @@ function draw() {
 
   //game screen
   if (gamePlay === true){
+    // chooseLevel();
     drawGrid();
     displayMistakes();
     displayRules();
@@ -77,7 +131,9 @@ function draw() {
   //home screen
   else {
     displayTitle();
-    displayPlayButton();
+    displayEasyButton();
+    displayMediumButton();
+    displayHardButton();
     numberBounce();
   }
 }
@@ -158,7 +214,7 @@ function mousePressed(){
   }
 
   //numbers bouncing on home screen
-  else if (gamePlay === false && mouseX < windowWidth/2 - 175/2 || mouseX > windowWidth/2 + 175/2 || mouseY < windowHeight/2 + 75 || mouseY > windowHeight/2 + 125){
+  else if (gamePlay === false && mouseX < windowWidth/2 - 175/2 || mouseX > windowWidth/2 + 175/2 || mouseY < windowHeight/2 + 25 || mouseY > windowHeight/2 + 75){
     let theNum = new Num(mouseX, mouseY);
     numArray.push(theNum);
     buttonSound.play();
@@ -219,6 +275,9 @@ function mouseClicked(){
       }
       gamePlay = false;
       isComplete = false;
+      easy = false;
+      medium = false;
+      hard = false;
       mistakes = 0;
       buttonSound.play();
     }
@@ -230,15 +289,59 @@ function mouseClicked(){
   }
 
   else {
-    //play button
+    //easy button
     if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
-      mouseY > windowHeight/2 + 75 && mouseY < windowHeight/2 + 125){
+      mouseY > windowHeight/2 + 25 && mouseY < windowHeight/2 + 75){
       gamePlay = true;
+      easy = true;
+      numArray = [];
+      buttonSound.play();
+    }
+
+    //medium button
+    if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
+      mouseY > windowHeight/2 + 100 && mouseY < windowHeight/2 + 150){
+      gamePlay = true;
+      medium = true;
+      numArray = [];
+      buttonSound.play();
+    }
+
+    //hard button
+    if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
+      mouseY > windowHeight/2 + 175 && mouseY < windowHeight/2 + 225){
+      gamePlay = true;
+      hard = true;
       numArray = [];
       buttonSound.play();
     }
   }
 }
+
+// function chooseLevel(){
+//   if (easy){
+//     options = [[sudoku1answer, sudoku1original, sudoku1player],
+//               [sudoku2answer, sudoku2original, sudoku2player],
+//               [sudoku3answer, sudoku3original, sudoku3player]];
+//   }
+
+//   else if (medium){
+//     options = [[sudoku4answer, sudoku4original, sudoku4player],
+//               [sudoku5answer, sudoku5original, sudoku5player],
+//               [sudoku6answer, sudoku6original, sudoku6player]];
+//   }
+
+//   else if (hard){
+//     options = [[sudoku7answer, sudoku7original, sudoku7player],
+//               [sudoku8answer, sudoku8original, sudoku8player],
+//               [sudoku9answer, sudoku9original, sudoku9player]];
+//   }
+
+//   choice = Math.round(random(3));
+//   answer = options[choice][0];
+//   original = options[choice][1]; 
+//   playerGrid = options[choice][2];
+// }
 
 function checkCompletion(){
   for (let y = 0; y<rows; y++){
@@ -364,18 +467,40 @@ function displayTitle(){
 
   let boringScreen = "(this home screen is looking a little plain...)";
   textSize(20);
-  text(boringScreen, windowWidth/2, windowHeight/2);
+  text(boringScreen, windowWidth/2, windowHeight/2.2);
 }
 
-function displayPlayButton(){
+function displayEasyButton(){
   strokeWeight(2);
   fill(219, 218, 191);
-  rect(windowWidth/2 - 175/2, windowHeight/2 + 75, 175, 50, 20);
-  let playText = "PLAY";
+  rect(windowWidth/2 - 175/2, windowHeight/2 + 25, 175, 50, 20);
+  let easyText = "Easy";
   fill("black");
   textSize(35);
   textAlign(CENTER, CENTER);
-  text(playText, windowWidth/2, windowHeight/2 + 100);
+  text(easyText, windowWidth/2, windowHeight/2 + 50);
+}
+
+function displayMediumButton(){
+  strokeWeight(2);
+  fill(219, 218, 191);
+  rect(windowWidth/2 - 175/2, windowHeight/2 + 100, 175, 50, 20);
+  let medText = "Medium";
+  fill("black");
+  textSize(35);
+  textAlign(CENTER, CENTER);
+  text(medText, windowWidth/2, windowHeight/2 + 125);
+}
+
+function displayHardButton(){
+  strokeWeight(2);
+  fill(219, 218, 191);
+  rect(windowWidth/2 - 175/2, windowHeight/2 + 175, 175, 50, 20);
+  let hardText = "Hard";
+  fill("black");
+  textSize(35);
+  textAlign(CENTER, CENTER);
+  text(hardText, windowWidth/2, windowHeight/2 + 200);
 }
 
 function numberBounce(){
