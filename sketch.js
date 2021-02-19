@@ -48,45 +48,45 @@ function preload(){
   complete = loadSound("assets/complete.mp3");
   error = loadSound("assets/error.wav");
   buttonSound = loadSound("assets/button.flac");
-  // backgroundMusic = loadSound("assets/music.ogg"); 
-  original = loadJSON("assets/sudoku1-original.json");
-  answer = loadJSON("assets/sudoku1-answer.json"); 
-  playerGrid = loadJSON("assets/sudoku1-player.json");
-  // sudoku1answer = preload("assets/sudoku1-answer.json");
-  // sudoku1original = preload("assets/sudoku1-original.json");
-  // sudoku1player = preload( "assets/sudoku1-player.json");
+  backgroundMusic = loadSound("assets/music.ogg"); 
+  // original = loadJSON("assets/sudoku1-original.json");
+  // answer = loadJSON("assets/sudoku1-answer.json"); 
+  // playerGrid = loadJSON("assets/sudoku1-player.json");
+  sudoku1answer = loadJSON("assets/sudoku1-answer.json");
+  sudoku1original = loadJSON("assets/sudoku1-original.json");
+  sudoku1player = loadJSON( "assets/sudoku1-player.json");
 
-  // sudoku2answer = preload("assets/sudoku2-answer.json");
-  // sudoku2original = preload("assets/sudoku2-original.json");
-  // sudoku2player = preload( "assets/sudoku2-player.json");
+  sudoku2answer = loadJSON("assets/sudoku2-answer.json");
+  sudoku2original = loadJSON("assets/sudoku2-original.json");
+  sudoku2player = loadJSON( "assets/sudoku2-player.json");
 
-  // sudoku3answer = preload("assets/sudoku3-answer.json");
-  // sudoku3original = preload("assets/sudoku3-original.json");
-  // sudoku3player = preload( "assets/sudoku3-player.json");
+  sudoku3answer = loadJSON("assets/sudoku3-answer.json");
+  sudoku3original = loadJSON("assets/sudoku3-original.json");
+  sudoku3player = loadJSON( "assets/sudoku3-player.json");
 
-  // sudoku4answer = preload("assets/sudoku4-answer.json");
-  // sudoku4original = preload("assets/sudoku4-original.json");
-  // sudoku4player = preload( "assets/sudoku4-player.json");
+  sudoku4answer = loadJSON("assets/sudoku4-answer.json");
+  sudoku4original = loadJSON("assets/sudoku4-original.json");
+  sudoku4player = loadJSON( "assets/sudoku4-player.json");
 
-  // sudoku5answer = preload("assets/sudoku5-answer.json");
-  // sudoku5original = preload("assets/sudoku5-original.json");
-  // sudoku5player = preload( "assets/sudoku5-player.json");
+  sudoku5answer = loadJSON("assets/sudoku5-answer.json");
+  sudoku5original = loadJSON("assets/sudoku5-original.json");
+  sudoku5player = loadJSON( "assets/sudoku5-player.json");
 
-  // sudoku6answer = preload("assets/sudoku6-answer.json");
-  // sudoku6original = preload("assets/sudoku6-original.json");
-  // sudoku6player = preload( "assets/sudoku6-player.json");
+  sudoku6answer = loadJSON("assets/sudoku6-answer.json");
+  sudoku6original = loadJSON("assets/sudoku6-original.json");
+  sudoku6player = loadJSON( "assets/sudoku6-player.json");
 
-  // sudoku7answer = preload("assets/sudoku7-answer.json");
-  // sudoku7original = preload("assets/sudoku7-original.json");
-  // sudoku7player = preload( "assets/sudoku7-player.json");
+  sudoku7answer = loadJSON("assets/sudoku7-answer.json");
+  sudoku7original = loadJSON("assets/sudoku7-original.json");
+  sudoku7player = loadJSON( "assets/sudoku7-player.json");
 
-  // sudoku8answer = preload("assets/sudoku8-answer.json");
-  // sudoku8original = preload("assets/sudoku8-original.json");
-  // sudoku8player = preload( "assets/sudoku8-player.json");
+  sudoku8answer = loadJSON("assets/sudoku8-answer.json");
+  sudoku8original = loadJSON("assets/sudoku8-original.json");
+  sudoku8player = loadJSON( "assets/sudoku8-player.json");
 
-  // sudoku9answer = preload("assets/sudoku9-answer.json");
-  // sudoku9original = preload("assets/sudoku9-original.json");
-  // sudoku9player = preload( "assets/sudoku9-player.json");
+  sudoku9answer = loadJSON("assets/sudoku9-answer.json");
+  sudoku9original = loadJSON("assets/sudoku9-original.json");
+  sudoku9player = loadJSON( "assets/sudoku9-player.json");
 }
 
 function setup() {
@@ -113,7 +113,7 @@ function draw() {
 
   //game screen
   if (gamePlay === true){
-    // chooseLevel();
+    chooseLevel();
     drawGrid();
     displayMistakes();
     displayRules();
@@ -318,30 +318,39 @@ function mouseClicked(){
   }
 }
 
-// function chooseLevel(){
-//   if (easy){
-//     options = [[sudoku1answer, sudoku1original, sudoku1player],
-//               [sudoku2answer, sudoku2original, sudoku2player],
-//               [sudoku3answer, sudoku3original, sudoku3player]];
-//   }
-
-//   else if (medium){
-//     options = [[sudoku4answer, sudoku4original, sudoku4player],
-//               [sudoku5answer, sudoku5original, sudoku5player],
-//               [sudoku6answer, sudoku6original, sudoku6player]];
-//   }
-
-//   else if (hard){
-//     options = [[sudoku7answer, sudoku7original, sudoku7player],
-//               [sudoku8answer, sudoku8original, sudoku8player],
-//               [sudoku9answer, sudoku9original, sudoku9player]];
-//   }
-
-//   choice = Math.round(random(3));
-//   answer = options[choice][0];
-//   original = options[choice][1]; 
-//   playerGrid = options[choice][2];
-// }
+function chooseLevel(){
+  if (easy || medium || hard){
+    if (easy){
+      options = [[sudoku1answer, sudoku1original, sudoku1player],
+                [sudoku2answer, sudoku2original, sudoku2player],
+                [sudoku3answer, sudoku3original, sudoku3player]];
+  
+    }
+  
+    else if (medium){
+      options = [[sudoku4answer, sudoku4original, sudoku4player],
+                [sudoku5answer, sudoku5original, sudoku5player],
+                [sudoku6answer, sudoku6original, sudoku6player]];
+  
+    }
+  
+    else if (hard){
+      options = [[sudoku7answer, sudoku7original, sudoku7player],
+                [sudoku8answer, sudoku8original, sudoku8player],
+                [sudoku9answer, sudoku9original, sudoku9player]];
+  
+    }
+  
+    choice = Math.round(random(3));
+    answer = options[choice][0];
+    original = options[choice][1]; 
+    playerGrid = options[choice][2];
+  
+    easy = false;
+    medium = false;
+    hard = false;
+  }
+}
 
 function checkCompletion(){
   for (let y = 0; y<rows; y++){
