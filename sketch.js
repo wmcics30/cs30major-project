@@ -11,6 +11,9 @@
 //       Sudoku 4-6: MEDIUM
 //       Sudoku 7-9: HARD
 //
+// Small Bugs: - double-click 
+//             - bottom edge bounce
+//             
 // Background music is made by syncopika
 
 let rows, cols, cellWidth, cellHeight;
@@ -49,44 +52,42 @@ function preload(){
   error = loadSound("assets/error.wav");
   buttonSound = loadSound("assets/button.flac");
   backgroundMusic = loadSound("assets/music.ogg"); 
-  // original = loadJSON("assets/sudoku1-original.json");
-  // answer = loadJSON("assets/sudoku1-answer.json"); 
-  // playerGrid = loadJSON("assets/sudoku1-player.json");
+  
   sudoku1answer = loadJSON("assets/sudoku1-answer.json");
   sudoku1original = loadJSON("assets/sudoku1-original.json");
-  sudoku1player = loadJSON( "assets/sudoku1-player.json");
+  sudoku1player = loadJSON("assets/sudoku1-player.json");
 
   sudoku2answer = loadJSON("assets/sudoku2-answer.json");
   sudoku2original = loadJSON("assets/sudoku2-original.json");
-  sudoku2player = loadJSON( "assets/sudoku2-player.json");
+  sudoku2player = loadJSON("assets/sudoku2-player.json");
 
   sudoku3answer = loadJSON("assets/sudoku3-answer.json");
   sudoku3original = loadJSON("assets/sudoku3-original.json");
-  sudoku3player = loadJSON( "assets/sudoku3-player.json");
+  sudoku3player = loadJSON("assets/sudoku3-player.json");
 
   sudoku4answer = loadJSON("assets/sudoku4-answer.json");
   sudoku4original = loadJSON("assets/sudoku4-original.json");
-  sudoku4player = loadJSON( "assets/sudoku4-player.json");
+  sudoku4player = loadJSON("assets/sudoku4-player.json");
 
   sudoku5answer = loadJSON("assets/sudoku5-answer.json");
   sudoku5original = loadJSON("assets/sudoku5-original.json");
-  sudoku5player = loadJSON( "assets/sudoku5-player.json");
+  sudoku5player = loadJSON("assets/sudoku5-player.json");
 
   sudoku6answer = loadJSON("assets/sudoku6-answer.json");
   sudoku6original = loadJSON("assets/sudoku6-original.json");
-  sudoku6player = loadJSON( "assets/sudoku6-player.json");
+  sudoku6player = loadJSON("assets/sudoku6-player.json");
 
   sudoku7answer = loadJSON("assets/sudoku7-answer.json");
   sudoku7original = loadJSON("assets/sudoku7-original.json");
-  sudoku7player = loadJSON( "assets/sudoku7-player.json");
+  sudoku7player = loadJSON("assets/sudoku7-player.json");
 
   sudoku8answer = loadJSON("assets/sudoku8-answer.json");
   sudoku8original = loadJSON("assets/sudoku8-original.json");
-  sudoku8player = loadJSON( "assets/sudoku8-player.json");
+  sudoku8player = loadJSON("assets/sudoku8-player.json");
 
   sudoku9answer = loadJSON("assets/sudoku9-answer.json");
   sudoku9original = loadJSON("assets/sudoku9-original.json");
-  sudoku9player = loadJSON( "assets/sudoku9-player.json");
+  sudoku9player = loadJSON("assets/sudoku9-player.json");
 }
 
 function setup() {
@@ -275,9 +276,6 @@ function mouseClicked(){
       }
       gamePlay = false;
       isComplete = false;
-      easy = false;
-      medium = false;
-      hard = false;
       mistakes = 0;
       buttonSound.play();
     }
@@ -299,7 +297,7 @@ function mouseClicked(){
     }
 
     //medium button
-    if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
+    else if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
       mouseY > windowHeight/2 + 100 && mouseY < windowHeight/2 + 150){
       gamePlay = true;
       medium = true;
@@ -308,7 +306,7 @@ function mouseClicked(){
     }
 
     //hard button
-    if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
+    else if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 + 175/2 &&
       mouseY > windowHeight/2 + 175 && mouseY < windowHeight/2 + 225){
       gamePlay = true;
       hard = true;
@@ -340,15 +338,15 @@ function chooseLevel(){
                 [sudoku9answer, sudoku9original, sudoku9player]];
   
     }
-  
-    choice = Math.round(random(3));
-    answer = options[choice][0];
-    original = options[choice][1]; 
-    playerGrid = options[choice][2];
-  
+
     easy = false;
     medium = false;
     hard = false;
+  
+    choice = Math.floor(random(3));
+    answer = options[choice][0];
+    original = options[choice][1]; 
+    playerGrid = options[choice][2];
   }
 }
 
