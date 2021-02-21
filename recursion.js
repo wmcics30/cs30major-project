@@ -21,9 +21,9 @@ let col = 0;
 function solveGrid(row, col){
 
   //base case
-  if (col === 9 && row === 8){
-    return true;
-  }
+  // if (col === 9 && row === 8){
+  //   return true;
+  // }
 
   //move onto next row
   if (col === 9 && row < 8){
@@ -104,3 +104,4 @@ function checkNum(row, col, num){
 }
 
 console.log(solveGrid(row,col));
+console.log(grid);
