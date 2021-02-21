@@ -13,6 +13,7 @@
 //
 // Small Bugs: - double-click 
 //             - bottom edge bounce
+//             - Make levels cycle, not random
 //             
 // Background music is made by syncopika
 
@@ -52,7 +53,7 @@ function preload(){
   error = loadSound("assets/error.wav");
   buttonSound = loadSound("assets/button.flac");
   backgroundMusic = loadSound("assets/music.ogg"); 
-  
+
   sudoku1answer = loadJSON("assets/sudoku1-answer.json");
   sudoku1original = loadJSON("assets/sudoku1-original.json");
   sudoku1player = loadJSON("assets/sudoku1-player.json");
