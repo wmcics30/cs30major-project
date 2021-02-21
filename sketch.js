@@ -13,7 +13,6 @@
 //
 // Small Bugs: - double-click 
 //             - bottom edge bounce
-//             - Make levels cycle, not random
 //             
 // Background music is made by syncopika
 
@@ -35,7 +34,9 @@ let isComplete = false;
 let easy = false;
 let medium = false; 
 let hard = false;
-let options, choice;
+let options;
+let choice = "";
+
 let sudoku1answer, sudoku1original, sudoku1player, 
   sudoku2answer, sudoku2original, sudoku2player, 
   sudoku3answer, sudoku3original, sudoku3player, 
@@ -343,8 +344,14 @@ function chooseLevel(){
     easy = false;
     medium = false;
     hard = false;
+
+    let pick = Math.floor(random(3));
+    
+    while (pick === choice){
+      pick = Math.floor(random(3));
+    }
   
-    choice = Math.floor(random(3));
+    choice = pick;
     answer = options[choice][0];
     original = options[choice][1]; 
     playerGrid = options[choice][2];
