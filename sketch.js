@@ -11,7 +11,7 @@
 //       Sudoku 4-6: MEDIUM
 //       Sudoku 7-9: HARD
 //
-// Small Bugs: - double-click 
+// Small Bugs: - double-click (make one big triangle)
 //             - bottom edge bounce
 //             
 // Background music is made by syncopika

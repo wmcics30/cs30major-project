@@ -15,12 +15,12 @@ let grid = [[0,0,0,2,6,0,7,0,1],
             [0,4,0,0,5,0,0,3,6],
             [7,0,3,0,1,8,0,0,0]];
 
-let row = 0;
-let col = 0;
-
 function solveGrid(row, col){
 
   //base case
+  if (checkIfDone(grid)){
+    return true;
+  }
   // if (col === 9 && row === 8){
   //   return true;
   // }
@@ -36,7 +36,6 @@ function solveGrid(row, col){
     for (let num = 1; num<=9; num++){  
       if (checkNum(row, col, num) === true){
         grid[row][col] = num;
-        console.log(grid);
 
         //recursive call
         if (solveGrid(row, col + 1)){
@@ -98,10 +97,20 @@ function checkNum(row, col, num){
       }
     }
   }
-
   //current num is a possibility 
   return true;
 }
 
-console.log(solveGrid(row,col));
+console.log(solveGrid(0,0));
 console.log(grid);
+
+function checkIfDone(grid){
+  for (let y = 0; y<9; y++){
+    for (let x = 0; x<9; x++){
+      if (grid[y][x] === 0){
+        return false;
+      }
+    }
+  }
+  return true;
+}
