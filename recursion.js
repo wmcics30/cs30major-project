@@ -98,7 +98,6 @@ function checkNum(row, col, num){
   //current num is a possibility 
   return true;
 }
-
-console.log(solveGrid(0,0));
+solveGrid(0,0);
 console.log(grid);
 

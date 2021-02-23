@@ -11,8 +11,7 @@
 //       Sudoku 4-6: MEDIUM
 //       Sudoku 7-9: HARD
 //
-// Small Bugs: - double-click (make one big triangle)
-//             - bottom edge bounce
+// Small Bugs: - bottom edge bounce
 //             
 // Background music is made by syncopika
 
@@ -217,7 +216,7 @@ function mousePressed(){
   }
 
   //numbers bouncing on home screen
-  else if (gamePlay === false && mouseX < windowWidth/2 - 175/2 || mouseX > windowWidth/2 + 175/2 || mouseY < windowHeight/2 + 25 || mouseY > windowHeight/2 + 75){
+  else if (gamePlay === false && mouseX < windowWidth/2 - 175/2 || mouseX > windowWidth/2 + 175/2 || mouseY < windowHeight/2 + 25 || mouseY > windowHeight/2 + 225){
     let theNum = new Num(mouseX, mouseY);
     numArray.push(theNum);
     buttonSound.play();
@@ -355,6 +354,7 @@ function chooseLevel(){
     answer = options[choice][0];
     original = options[choice][1]; 
     playerGrid = options[choice][2];
+    solveGrid(0, 0, answer);
   }
 }
 
@@ -557,4 +557,88 @@ class Num {
       this.dy *= -1;
     }
   }
+}
+
+function solveGrid(row, col){
+
+  if (col === 9 && row === 8){
+    return true;
+  }
+
+  //move onto next row
+  if (col === 9 && row < 8){
+    row++;
+    col = 0;
+  }
+
+  //solve
+  if (answer[row][col] === 0){
+    for (let num = 1; num<=9; num++){  
+      if (checkNum(row, col, num) === true){
+        answer[row][col] = num;
+
+        //recursive call
+        if (solveGrid(row, col + 1)){
+          return true;
+        }
+      }
+    }
+    //backtrack
+    answer[row][col] = 0;
+  }
+
+  //if cell is already filled, move on to next cell
+  else {
+    if (solveGrid(row, col + 1)){
+      return true;
+    }
+  }
+}
+
+function checkNum(row, col, num){
+  let rowRange;
+  let colRange;
+
+  //check row
+  if (answer[row].includes(num)){
+    return false;
+  }
+
+  //check column
+  for (let i = 0; i<9; i++){
+    if (num === answer[i][col]){
+      return false;
+    }
+  }
+
+  //check 3x3 square
+  if (row <= 2){ //top row
+    rowRange = 2;
+  }
+  else if (row <= 5){ //middle row
+    rowRange = 5;
+  }
+  else if (row <= 8){ //bottom row
+    rowRange = 8;
+  }
+
+  if (col <= 2){ //left column
+    colRange = 2;
+  }
+  else if (col <= 5){ //middle column
+    colRange = 5;
+  }
+  else if (col <= 8){ //right column
+    colRange = 8;
+  }
+
+  for (let i = rowRange - 2; i <= rowRange; i++){
+    for (let j = colRange - 2; j <= colRange; j++){
+      if (num === answer[i][j]){
+        return false;
+      }
+    }
+  }
+  //current num is a possibility 
+  return true;
 }
