@@ -17,13 +17,9 @@ let grid = [[0,0,0,2,6,0,7,0,1],
 
 function solveGrid(row, col){
 
-  //base case
-  if (checkIfDone(grid)){
+  if (col === 9 && row === 8){
     return true;
   }
-  // if (col === 9 && row === 8){
-  //   return true;
-  // }
 
   //move onto next row
   if (col === 9 && row < 8){
@@ -49,7 +45,9 @@ function solveGrid(row, col){
 
   //if cell is already filled, move on to next cell
   else {
-    solveGrid(row, col+1);
+    if (solveGrid(row, col + 1)){
+      return true;
+    }
   }
 }
 
@@ -104,13 +102,3 @@ function checkNum(row, col, num){
 console.log(solveGrid(0,0));
 console.log(grid);
 
-function checkIfDone(grid){
-  for (let y = 0; y<9; y++){
-    for (let x = 0; x<9; x++){
-      if (grid[y][x] === 0){
-        return false;
-      }
-    }
-  }
-  return true;
-}
