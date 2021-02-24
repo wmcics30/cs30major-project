@@ -10,9 +10,8 @@
 // NOTE: Sudoku 1-3: EASY
 //       Sudoku 4-6: MEDIUM
 //       Sudoku 7-9: HARD
-//
-// Small Bugs: - bottom edge bounce
 //             
+// p5js Reference textBounds()
 // Background music is made by syncopika
 
 let rows, cols, cellWidth, cellHeight;
@@ -35,6 +34,7 @@ let medium = false;
 let hard = false;
 let options;
 let choice = "";
+let testNum = false;
 
 let sudoku1answer, sudoku1original, sudoku1player, 
   sudoku2answer, sudoku2original, sudoku2player, 
@@ -46,6 +46,15 @@ let sudoku1answer, sudoku1original, sudoku1player,
   sudoku8answer, sudoku8original, sudoku8player, 
   sudoku9answer, sudoku9original, sudoku9player;
 
+let possibles = [[[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]],
+                [[],[],[],[],[],[],[],[],[]]];
 
 function preload(){
   click = loadSound("assets/click1.wav");
@@ -93,7 +102,7 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // backgroundMusic.loop();
+  backgroundMusic.loop();
 
   //center the grid
   gridSize = windowWidth*0.38;
@@ -117,6 +126,7 @@ function draw() {
   if (gamePlay === true){
     chooseLevel();
     drawGrid();
+    possibleNum();
     displayMistakes();
     displayRules();
     displayClearButton();
@@ -314,6 +324,20 @@ function mouseClicked(){
       numArray = [];
       buttonSound.play();
     }
+  }
+}
+
+function possibleNum(){
+  if (keyIsDown(32)){ //space bar
+    testNum = true;
+  }
+  else{
+    testNum = false;
+  }
+
+  if (testNum === true){
+    possibles[y][x].push(key);
+    console.log(possibles);
   }
 }
 
@@ -552,13 +576,13 @@ class Num {
     }
 
     //without "-10" after this.fontSize, it will bounce before it hits the bottom edge
-    //I will try to work out the logistics of this issue for my final project
-    if (this.y < 0 || this.y + this.fontSize - 10> windowHeight) { 
+    if (this.y < 0 || this.y + this.fontSize - 10 >= windowHeight) { 
       this.dy *= -1;
     }
   }
 }
 
+//backtracking algorithm to solve empty sudoku
 function solveGrid(row, col){
 
   if (col === 9 && row === 8){
