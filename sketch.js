@@ -6,6 +6,8 @@
 // - Selecting a number would highlight all occurances of that number
 // - The lines of text in the rules wil start a new line if the next word does not fit
 // - The rules will not overlap with each other even if the screen is narrow
+// - Backtracking algorithm is able to solve sudokus
+// - Multiple difficulty levels with three options per difficulty, never repeating the same level twice in a row
 //
 // NOTE: Sudoku 1-3: EASY
 //       Sudoku 4-6: MEDIUM
@@ -21,6 +23,7 @@ let selectNum = "";
 let x, y;
 let click, complete, error, buttonSound; //sounds
 let answer, playerGrid, original; //grids
+let pencil;
 let mistakes = 0;
 let sidePadding, topPadding, gridSize;
 let sideEdge, vertEdge, bottomEdge;
@@ -34,7 +37,8 @@ let medium = false;
 let hard = false;
 let options;
 let choice = "";
-let testNum = false;
+let pencilMode = false;
+let possibilities = [];
 
 let sudoku1answer, sudoku1original, sudoku1player, 
   sudoku2answer, sudoku2original, sudoku2player, 
@@ -46,22 +50,13 @@ let sudoku1answer, sudoku1original, sudoku1player,
   sudoku8answer, sudoku8original, sudoku8player, 
   sudoku9answer, sudoku9original, sudoku9player;
 
-let possibles = [[[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[],[]]];
-
 function preload(){
   click = loadSound("assets/click1.wav");
   complete = loadSound("assets/complete.mp3");
   error = loadSound("assets/error.wav");
   buttonSound = loadSound("assets/button.flac");
   backgroundMusic = loadSound("assets/music.ogg"); 
+  pencil = loadImage("assets/pencil.png");
 
   sudoku1answer = loadJSON("assets/sudoku1-answer.json");
   sudoku1original = loadJSON("assets/sudoku1-original.json");
@@ -117,6 +112,14 @@ function setup() {
   cols = 9;
   cellWidth = gridSize/cols;
   cellHeight = gridSize/rows;
+
+  //make 3D grid to store possibilities
+  for (let i=0; i<9; i++){
+    possibilities.push([]);
+    for (let j=0; j<9; j++){
+      possibilities[i].push([]);
+    }
+  }
 }
 
 function draw() {
@@ -126,12 +129,13 @@ function draw() {
   if (gamePlay === true){
     chooseLevel();
     drawGrid();
-    possibleNum();
     displayMistakes();
     displayRules();
     displayClearButton();
     displayHomeButton();
     displayRevealButton();
+    image(pencil, sidePadding, topPadding - 60, 55, 55);
+    displayPencilText();
 
     //check if complete and play sound once
     if (checkCompletion() && isComplete === false){ 
@@ -234,7 +238,7 @@ function mousePressed(){
 }
 
 function keyPressed(){
-  if (addNum === true){ 
+  if (addNum === true && pencilMode === false){ 
 
     //user can only enter numbers 1-9
     if (keyCode >= 49 && keyCode <= 57){ 
@@ -258,6 +262,13 @@ function keyPressed(){
 
     //after you click off a square, it un-highlights those numbers
     highlightNum = false; 
+  }
+
+  else if (pencilMode){
+    if (!possibilities[y][x].includes(key) && keyCode >= 49 && keyCode <= 57){
+      possibilities[y][x].push(key);
+      console.log(possibilities); //REMOVE
+    }
   }
 }
 
@@ -295,6 +306,12 @@ function mouseClicked(){
     if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 - 175/2 + 175 && mouseY > vertEdge + 10 && mouseY < vertEdge + 45){
       revealAnswer();
     }
+
+    //pencil button
+    if (mouseX > sidePadding && mouseX < sidePadding + 55 && mouseY > topPadding - 60 && mouseY < topPadding - 5){
+      pencilMode = !pencilMode;
+      console.log(pencilMode); //REMOVE
+    }
   }
 
   else {
@@ -324,20 +341,6 @@ function mouseClicked(){
       numArray = [];
       buttonSound.play();
     }
-  }
-}
-
-function possibleNum(){
-  if (keyIsDown(32)){ //space bar
-    testNum = true;
-  }
-  else{
-    testNum = false;
-  }
-
-  if (testNum === true){
-    possibles[y][x].push(key);
-    console.log(possibles);
   }
 }
 
@@ -391,6 +394,16 @@ function checkCompletion(){
     }
   }
   return true;
+}
+
+function displayPencilText(){
+  if (pencilMode){
+    let pencilText = "Pencil Mode";
+    fill("black");
+    textSize(25);
+    textFont("DIDOT");
+    text(pencilText, sidePadding + 70, topPadding - 20);
+  }
 }
 
 function displayMistakes(){
