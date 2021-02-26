@@ -3,11 +3,9 @@
 // January 26, 2021
 //
 // Extra for Experts:
-// - Selecting a number would highlight all occurances of that number
-// - The lines of text in the rules wil start a new line if the next word does not fit
-// - The rules will not overlap with each other even if the screen is narrow
 // - Backtracking algorithm is able to solve sudokus
 // - Multiple difficulty levels with three options per difficulty, never repeating the same level twice in a row
+// - Allows you to keep track of possible numbers before commiting to one
 //
 // NOTE: Sudoku 1-3: EASY
 //       Sudoku 4-6: MEDIUM
@@ -176,10 +174,29 @@ function drawGrid(){
         }
 
         //places number in box
-        textSize(30);
+        textSize(35);
         textFont("DIDOT");
         textAlign(CENTER, CENTER);
         text(playerGrid[y][x], x*cellWidth + sidePadding + (cellWidth/2), y*cellHeight + topPadding + (cellHeight/2));
+        possibilities[y][x] = [];
+      }
+
+      //place possibilities in empty square
+      else{
+        let subCellWidth = cellWidth/3;
+        let subCellHeight = cellHeight/3;
+
+        for (let i = 0; i < 3; i++){
+          for (let j = 0; j < 3; j++){
+            let num = 3 * i + j + 1;
+            if (possibilities[y][x].includes(str(num))){
+              fill("black");
+              textSize(20);
+              text(num, j*subCellWidth + subCellWidth/3 + sidePadding + x*cellWidth, 
+                i*subCellHeight + subCellHeight/2 + topPadding + y*cellHeight);
+            }
+          }
+        }
       }
     }
   }
@@ -209,23 +226,26 @@ function mousePressed(){
     x = Math.floor((mouseX - sidePadding)/cellWidth);
     y = Math.floor((mouseY - topPadding)/cellHeight);
 
-    //if there is a number there, highlight all occurances
-    if (int(playerGrid[y][x]) !== 0){ 
-      highlightNum = true; 
-  
-      if (original[y][x] !== 0){
-        selectNum = original[y][x];
+    if (x >= 0 && x <= 8 && y >= 0 && y <= 8){ //sanity check
+      
+      //if there is a number there, highlight all occurances
+      if (int(playerGrid[y][x]) !== 0){ 
+        highlightNum = true; 
+    
+        if (original[y][x] !== 0){
+          selectNum = original[y][x];
+        }
+        else{
+          selectNum = int(playerGrid[y][x]);
+        }
       }
-      else{
-        selectNum = int(playerGrid[y][x]);
+    
+      //check if square selected is able to be changed
+      if (original[y][x] === 0) { 
+        addNum = true;
+        cellX = x;
+        cellY = y;
       }
-    }
-  
-    //check if square selected is able to be changed
-    if (original[y][x] === 0) { 
-      addNum = true;
-      cellX = x;
-      cellY = y;
     }
   }
 
@@ -253,7 +273,7 @@ function keyPressed(){
       }
     }
 
-    //deletes number
+    //deletes number (except in pencil mode)
     if (keyCode === BACKSPACE){ 
       click.play();
       playerGrid[y][x] = 0;
@@ -267,7 +287,6 @@ function keyPressed(){
   else if (pencilMode){
     if (!possibilities[y][x].includes(key) && keyCode >= 49 && keyCode <= 57){
       possibilities[y][x].push(key);
-      console.log(possibilities); //REMOVE
     }
   }
 }
@@ -283,6 +302,7 @@ function mouseClicked(){
       for (let y = 0; y<rows; y++){
         for (let x = 0; x<cols; x++){
           playerGrid[y][x] = original[y][x];
+          possibilities[y][x] = [];
         }
       }
       buttonSound.play();
@@ -294,10 +314,12 @@ function mouseClicked(){
       for (let y = 0; y<rows; y++){
         for (let x = 0; x<cols; x++){
           playerGrid[y][x] = original[y][x];
+          possibilities[y][x] = [];
         }
       }
       gamePlay = false;
       isComplete = false;
+      pencilMode = false;
       mistakes = 0;
       buttonSound.play();
     }
@@ -310,7 +332,6 @@ function mouseClicked(){
     //pencil button
     if (mouseX > sidePadding && mouseX < sidePadding + 55 && mouseY > topPadding - 60 && mouseY < topPadding - 5){
       pencilMode = !pencilMode;
-      console.log(pencilMode); //REMOVE
     }
   }
 
@@ -444,14 +465,14 @@ function displayRules(){
   startLine3 = startLine2 + point2Height + spaceInBetween;
 
 
-  let point3 = ["- Click ", "on ", "a ", "number ", "to ", "highlight ", "all ", "occurances ", "of ", "that ", "number ", "in ", "the ", "grid. "];
+  let point3 = ["- Click ", "on ", "the ", "pencil ", "icon ", "to ", "toggle ", "PENCIL ", "MODE ", "which ", "will ", "allow ", "you ", "to ", "keep ", "track ", "of ", "possible ", "numbers. "];
   let point3Spaced = textLengthCheck(point3);
   text(point3Spaced, 20, startLine3, textBox);
   let point3Lines = point3Spaced.match(/\n/g).length +1;
   let point3Height = point3Lines * letterSize;
   startLine4 = startLine3 + point3Height + spaceInBetween;
 
-  let point4 = ["- Click ", "on ", "an ", "number ", "you ", "wish ", "to ", "erase ", "and ", "hit ", "BACKSPACE. "];
+  let point4 = ["- Hit ", "BACKSPACE ", "to ", "erase ", "a ", "selected ", "number. "];
   let point4Spaced = textLengthCheck(point4);
   text(point4Spaced, 20, startLine4, textBox);
 }
