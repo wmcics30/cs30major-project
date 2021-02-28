@@ -134,6 +134,9 @@ function draw() {
     displayRevealButton();
     image(pencil, sidePadding, topPadding - 60, 55, 55);
     displayPencilText();
+    if (isComplete){
+      displayComplete();
+    }
 
     //check if complete and play sound once
     if (checkCompletion() && isComplete === false){ 
@@ -285,8 +288,14 @@ function keyPressed(){
   }
 
   else if (pencilMode){
-    if (!possibilities[y][x].includes(key) && keyCode >= 49 && keyCode <= 57){
-      possibilities[y][x].push(key);
+    if (keyCode >= 49 && keyCode <= 57){
+      if (!possibilities[y][x].includes(key)){
+        possibilities[y][x].push(key);
+      }
+      else{
+        let index = possibilities[y][x].indexOf(key);
+        possibilities[y][x].splice(index, 1);
+      }
     }
   }
 }
@@ -430,10 +439,19 @@ function displayPencilText(){
 function displayMistakes(){
   let mistakesText = "Mistakes: " + mistakes;
   fill("black");
-  textSize(30);
+  textSize(25);
   textFont("DIDOT");
   textAlign(RIGHT, CENTER);
   text(mistakesText, sideEdge, topPadding - 20);
+}
+
+function displayComplete(){
+  let completeText = "LEVEL COMPLETE";
+  fill("black");
+  textSize(25);
+  textFont("DIDOT");
+  textAlign(CENTER, CENTER);
+  text(completeText, windowWidth/2, topPadding - 20);
 }
 
 function displayRules(){
@@ -465,14 +483,14 @@ function displayRules(){
   startLine3 = startLine2 + point2Height + spaceInBetween;
 
 
-  let point3 = ["- Click ", "on ", "the ", "pencil ", "icon ", "to ", "toggle ", "PENCIL ", "MODE ", "which ", "will ", "allow ", "you ", "to ", "keep ", "track ", "of ", "possible ", "numbers. "];
+  let point3 = ["- Click ", "on ", "the ", "pencil ", "icon ", "to ", "toggle ", "PENCIL ", "MODE ", "which ", "will ", "allow ", "you ", "to ", "keep ", "track ", "of ", "possible ", "numbers. " ];
   let point3Spaced = textLengthCheck(point3);
   text(point3Spaced, 20, startLine3, textBox);
   let point3Lines = point3Spaced.match(/\n/g).length +1;
   let point3Height = point3Lines * letterSize;
   startLine4 = startLine3 + point3Height + spaceInBetween;
 
-  let point4 = ["- Hit ", "BACKSPACE ", "to ", "erase ", "a ", "selected ", "number. "];
+  let point4 = ["- Hit ", "BACKSPACE ", "to ", "erase ", "a ", "selected ", "number. ", "To ", "erase ", "one ", "of ", "the ", "possible", "numbers ", "while ", "in ", "PENCIL ", "MODE, ", "enter ", "that ", "number ", "again. "];
   let point4Spaced = textLengthCheck(point4);
   text(point4Spaced, 20, startLine4, textBox);
 }
