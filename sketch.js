@@ -1,6 +1,6 @@
-//CS30 Final Project
+// CS30 Final Project
 // Amy Lu
-// January 26, 2021
+// February 28, 2021
 //
 // Extra for Experts:
 // - Backtracking algorithm is able to solve sudokus
@@ -10,8 +10,7 @@
 // NOTE: Sudoku 1-3: EASY
 //       Sudoku 4-6: MEDIUM
 //       Sudoku 7-9: HARD
-//             
-// p5js Reference textBounds()
+//
 // Background music is made by syncopika
 
 let rows, cols, cellWidth, cellHeight;
@@ -136,6 +135,7 @@ function draw() {
     displayPencilText();
     if (isComplete){
       displayComplete();
+      pencilMode = false;
     }
 
     //check if complete and play sound once
@@ -289,9 +289,11 @@ function keyPressed(){
 
   else if (pencilMode){
     if (keyCode >= 49 && keyCode <= 57){
+      //enter a new possibility
       if (!possibilities[y][x].includes(key)){
-        possibilities[y][x].push(key);
+        possibilities[y][x].push(key); 
       }
+      //remove a possibility
       else{
         let index = possibilities[y][x].indexOf(key);
         possibilities[y][x].splice(index, 1);
@@ -336,11 +338,13 @@ function mouseClicked(){
     //reveal answer button
     if (mouseX > windowWidth/2 - 175/2 && mouseX < windowWidth/2 - 175/2 + 175 && mouseY > vertEdge + 10 && mouseY < vertEdge + 45){
       revealAnswer();
+      pencilMode = false;
     }
 
     //pencil button
     if (mouseX > sidePadding && mouseX < sidePadding + 55 && mouseY > topPadding - 60 && mouseY < topPadding - 5){
       pencilMode = !pencilMode;
+      buttonSound.play();
     }
   }
 
@@ -403,6 +407,7 @@ function chooseLevel(){
 
     let pick = Math.floor(random(3));
     
+    //prevents a level from appearing twice in a row
     while (pick === choice){
       pick = Math.floor(random(3));
     }
@@ -411,6 +416,7 @@ function chooseLevel(){
     answer = options[choice][0];
     original = options[choice][1]; 
     playerGrid = options[choice][2];
+    //solves sudoku using backtracking
     solveGrid(0, 0, answer);
   }
 }
