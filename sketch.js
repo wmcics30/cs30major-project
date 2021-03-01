@@ -481,7 +481,7 @@ function displayRules(){
   let point1Height = point1Lines * letterSize + 70;
   startLine2 = point1Height + spaceInBetween;
 
-  let point2 = ["- Click ", "on ", "an ", "empty ", "sqaure ", "and ", "use ", "your ", "keyboard ", "to ", "fill ", "in ", "the ", "number. "];
+  let point2 = ["- Click ", "on ", "an ", "empty ", "square ", "and ", "use ", "your ", "keyboard ", "to ", "fill ", "in ", "the ", "number. "];
   let point2Spaced = textLengthCheck(point2);
   text(point2Spaced, 20, startLine2, textBox);
   let point2Lines = point2Spaced.match(/\n/g).length +1;
@@ -496,7 +496,7 @@ function displayRules(){
   let point3Height = point3Lines * letterSize;
   startLine4 = startLine3 + point3Height + spaceInBetween;
 
-  let point4 = ["- Hit ", "BACKSPACE ", "to ", "erase ", "a ", "selected ", "number. ", "To ", "erase ", "one ", "of ", "the ", "possible", "numbers ", "while ", "in ", "PENCIL ", "MODE, ", "enter ", "that ", "number ", "again. "];
+  let point4 = ["- Hit ", "BACKSPACE ", "to ", "erase ", "a ", "selected ", "number. ", "To ", "erase ", "one ", "of ", "the ", "possible ", "numbers ", "while ", "in ", "PENCIL ", "MODE, ", "enter ", "that ", "number ", "again. "];
   let point4Spaced = textLengthCheck(point4);
   text(point4Spaced, 20, startLine4, textBox);
 }
